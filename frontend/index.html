@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Street Food Finder</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+</head>
+<body>
+<header>
+    <h1>🍜 Street Food Finder</h1>
+    <input type="text" id="search" placeholder="Search for vendors...">
+</header>
+
+<div id="map"></div> <!-- Google Map -->
+
+<section id="vendor-list">
+    <h2>Vendors Nearby</h2>
+    <ul id="vendors"></ul> <!-- Vendors will be loaded dynamically -->
+</section>
+
+<script src="assets/script.js"></script>
+</body>
+</html>
