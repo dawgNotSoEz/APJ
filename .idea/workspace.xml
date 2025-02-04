@@ -4,26 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd64a14f-b01f-4606-80ad-4753f5038576" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../A.P.J/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/backend/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/backend/src/main/java/com/savi/apj/DatabaseHelper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/backend/src/main/java/com/savi/apj/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/backend/src/main/java/com/savi/apj/ReviewRoutes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/backend/src/main/java/com/savi/apj/VendorRoutes.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/backend/src/main/resources/env.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/backend/src/main/resources/schema.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/database/vendors.db" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/frontend/assets/script.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/frontend/assets/styles.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/frontend/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/frontend/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/frontend/vendor.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../A.P.J/start.sh" afterDir="false" />
-    </list>
+    <list default="true" id="fd64a14f-b01f-4606-80ad-4753f5038576" name="Changes" comment="Loading..." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,6 +21,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../A.P.J" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "LiveKiller"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/LiveKiller/A.P.J..git",
+    "accountId": "dd21860a-ad9a-416a-9cd9-47dde09b5b84"
+  }
+}]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
   "associatedIndex": 3
 }]]></component>
@@ -81,7 +74,31 @@
       <option name="presentableId" value="Default" />
       <updated>1738599635824</updated>
     </task>
+    <task id="LOCAL-00001" summary="Loading...">
+      <option name="closed" value="true" />
+      <created>1738601335385</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1738601335385</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Loading..." />
+    <option name="LAST_COMMIT_MESSAGE" value="Loading..." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

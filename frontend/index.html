@@ -4,22 +4,338 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Street Food Finder</title>
-    <link rel="stylesheet" href="assets/styles.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        :root {
+            --primary-color: #006491;
+            --secondary-color: #FFC300;
+            --background-light: #F5F5F5;
+            --text-color: #333;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: var(--background-light);
+            color: var(--text-color);
+        }
+        .navbar {
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .navbar-brand img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .nav-links a:hover {
+            background-color: rgba(255,255,255,0.2);
+            transform: scale(1.03);
+        }
+        .container {
+            display: flex;
+            height: calc(100vh - 80px);
+        }
+        #map {
+            width: 70%;
+            height: 100%;
+        }
+        #vendor-list {
+            width: 30%;
+            background-color: white;
+            overflow-y: auto;
+            padding: 1rem;
+            border-left: 1px solid #e0e0e0;
+        }
+        .search-container {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+        #search {
+            flex-grow: 1;
+            padding: 0.5rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 4px 0 0 4px;
+        }
+        .search-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-btn:hover {
+            background-color: #004f6f;
+        }
+        .filter-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .filter-btn {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #FFD700;
+        }
+        .vendor-card {
+            background-color: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 10px 6px rgba(0, 0, 0, 0.418);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        .vendor-card:hover {
+            transform: scale(1.02);
+            
+        }
+        .vendor-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .vendor-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .tag {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+        .cta-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .cta-button:hover {
+            background-color: #004f6f;
+        }
+    </style>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 <body>
-<header>
-    <h1>🍜 Street Food Finder</h1>
-    <input type="text" id="search" placeholder="Search for vendors...">
-</header>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NSIgZmlsbD0iI0ZGNjM0NyIvPjx0ZXh0IHg9IjUwIiB5PSI1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMzAiIGZvbnQtZmFtaWx5PSdBcmlhbCwgc2Fucy1zZXJpZic+U0Y8L3RleHQ+PC9zdmc+" alt="Street Food Finder Logo">
+            Street Food Finder
+        </div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Vendors</a>
+            <a href="#">Explore</a>
+            <a href="#">About</a>
+        </div>
+    </nav>
 
-<div id="map"></div> <!-- Google Map -->
+    <div class="container">
+        <div id="map"></div>
+        <div id="vendor-list">
+            <div class="search-container">
+                <input type="text" id="search" placeholder="Search for vendors or food...">
+                <button class="search-btn">Search</button>
+            </div>
 
-<section id="vendor-list">
-    <h2>Vendors Nearby</h2>
-    <ul id="vendors"></ul> <!-- Vendors will be loaded dynamically -->
-</section>
+            <div class="filter-section">
+                <button class="filter-btn" data-filter="north-indian">North Indian</button>
+                <button class="filter-btn" data-filter="south-indian">South Indian</button>
+                <button class="filter-btn" data-filter="street-chaat">Street Chaat</button>
+                <button class="filter-btn" data-filter="desserts">Desserts</button>
+                <button class="filter-btn" data-filter="verified">Verified</button>
+            </div>
 
-<script src="assets/script.js"></script>
+            <h2>Nearby Vendors</h2>
+            <div id="vendors"></div>
+        </div>
+    </div>
+
+    <script>
+        // Map Initialization
+        var map = L.map('map').setView([20.5937, 78.9629], 5); // Default to India
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Sample Vendor Data
+        const vendors = [
+            {
+                name: "Raj's Chaat Corner",
+                location: [19.0760, 72.8777], // Mumbai
+                tags: ["street-chaat", "north-indian", "verified"],
+                specialties: ["Pani Puri", "Bhel Puri", "Sev Puri"],
+                rating: 4.5
+            },
+            {
+                name: "Dosa Delight",
+                location: [13.0827, 80.2707], // Chennai
+                tags: ["south-indian", "verified"],
+                specialties: ["Masala Dosa", "Rava Dosa"],
+                rating: 4.7
+            },
+            {
+                name: "Sweet Street",
+                location: [22.5726, 88.3639], // Kolkata
+                tags: ["desserts", "north-indian"],
+                specialties: ["Rasgulla", "Mishti Doi"],
+                rating: 4.6
+            }
+        ];
+
+        // Render Vendors on Map and List
+        function renderVendors(filterTags = []) {
+            const vendorList = document.getElementById('vendors');
+            vendorList.innerHTML = ''; // Clear existing vendors
+
+            vendors.forEach(vendor => {
+                // Apply filters
+                if (filterTags.length === 0 || filterTags.some(tag => vendor.tags.includes(tag))) {
+                    // Add marker to map
+                    L.marker(vendor.location)
+                        .addTo(map)
+                        .bindPopup(`
+                            <b>${vendor.name}</b><br>
+                            Specialties: ${vendor.specialties.join(', ')}<br>
+                            Rating: ${vendor.rating}/5
+                        `);
+
+                    // Create vendor card
+                    const vendorCard = document.createElement('div');
+                    vendorCard.className = 'vendor-card';
+                    vendorCard.innerHTML = `
+                        <h3>${vendor.name}</h3>
+                        <p>Specialties: ${vendor.specialties.join(', ')}</p>
+                        <div class="vendor-tags">
+                            ${vendor.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                        </div>
+                        <button class="cta-button">View Details</button>
+                    `;
+                    vendorList.appendChild(vendorCard);
+                }
+            });
+        }
+
+        // Initial render
+        renderVendors();
+
+        // Geolocation
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(position => {
+                var userLat = position.coords.latitude;
+                var userLng = position.coords.longitude;
+                map.setView([userLat, userLng], 14);
+                L.marker([userLat, userLng])
+                    .addTo(map)
+                    .bindPopup("You are here!")
+                    .openPopup();
+            });
+        }
+
+        // Filter Button Event Listeners
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const activeFilters = Array.from(document.querySelectorAll('.filter-btn.active'))
+                    .map(activeBtn => activeBtn.dataset.filter);
+                renderVendors(activeFilters);
+            });
+        });
+
+        // Search Functionality
+        document.querySelector('.search-btn').addEventListener('click', performSearch);
+        document.getElementById('search').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') performSearch();
+        });
+
+        function performSearch() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const activeFilters = Array.from(document.querySelectorAll('.filter-btn.active'))
+                .map(activeBtn => activeBtn.dataset.filter);
+            
+            const filteredVendors = vendors.filter(vendor => 
+                (activeFilters.length === 0 || activeFilters.some(tag => vendor.tags.includes(tag))) &&
+                (vendor.name.toLowerCase().includes(searchTerm) || 
+                 vendor.specialties.some(specialty => specialty.toLowerCase().includes(searchTerm)))
+            );
+
+            // Clear existing map markers
+            map.eachLayer(layer => {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            // Re-render vendors
+            const vendorList = document.getElementById('vendors');
+            vendorList.innerHTML = '';
+
+            filteredVendors.forEach(vendor => {
+                // Add marker to map
+                L.marker(vendor.location)
+                    .addTo(map)
+                    .bindPopup(`
+                        <b>${vendor.name}</b><br>
+                        Specialties: ${vendor.specialties.join(', ')}<br>
+                        Rating: ${vendor.rating}/5
+                    `);
+
+                // Create vendor card
+                const vendorCard = document.createElement('div');
+                vendorCard.className = 'vendor-card';
+                vendorCard.innerHTML = `
+                    <h3>${vendor.name}</h3>
+                    <p>Specialties: ${vendor.specialties.join(', ')}</p>
+                    <div class="vendor-tags">
+                        ${vendor.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <button class="cta-button">View Details</button>
+                `;
+                vendorList.appendChild(vendorCard);
+            });
+        }
+    </script>
 </body>
 </html>
