@@ -5,22 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendor Details</title>
     <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </head>
 <body>
-<header>
-    <h1 id="vendor-name">Vendor Name</h1>
-    <p id="vendor-type">Type of Food</p>
-    <p id="vendor-location">Location: <span id="location"></span></p>
-</header>
+    <nav class="navbar">
+        <div class="navbar-brand">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48Y2lyY2xlIGN4PSI1MCIgY3k9IjUwIiByPSI0NSIgZmlsbD0iI0ZGNjM0NyIvPjx0ZXh0IHg9IjUwIiB5PSI1NSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiIGZvbnQtc2l6ZT0iMzAiIGZvbnQtZmFtaWx5PSdBcmlhbCwgc2Fucy1zZXJpZic+U0Y8L3RleHQ+PC9zdmc+" alt="Street Food Finder Logo">
+            Street Food Finder
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="index.html">Vendors</a>
+            <a href="index.html">Explore</a>
+            <a href="index.html">About</a>
+        </div>
+    </nav>
 
-<section id="reviews">
-    <h2>Reviews</h2>
-    <ul id="review-list"></ul>
-    <h3>Add a Review</h3>
-    <textarea id="review-text" placeholder="Write your review..."></textarea>
-    <button onclick="submitReview()">Submit</button>
-</section>
+    <div class="container">
+        <div class="vendor-details">
+            <header>
+                <h1 id="vendor-name">Vendor Name</h1>
+                <p id="vendor-type">Type of Food</p>
+                <p id="vendor-location">Location: <span id="location"></span></p>
+                <div id="vendor-map"></div>
+            </header>
 
-<script src="assets/script.js"></script>
+            <section id="reviews">
+                <h2>Reviews</h2>
+                <div class="review-form">
+                    <h3>Add a Review</h3>
+                    <div class="rating-input">
+                        <label for="review-rating">Rating:</label>
+                        <select id="review-rating" required>
+                            <option value="">Select rating</option>
+                            <option value="1">1 ★</option>
+                            <option value="2">2 ★★</option>
+                            <option value="3">3 ★★★</option>
+                            <option value="4">4 ★★★★</option>
+                            <option value="5">5 ★★★★★</option>
+                        </select>
+                    </div>
+                    <textarea id="review-text" placeholder="Write your review..." required></textarea>
+                    <button onclick="submitReview()" class="cta-button">Submit Review</button>
+                </div>
+                <ul id="review-list"></ul>
+            </section>
+        </div>
+    </div>
+
+    <script src="assets/script.js"></script>
 </body>
 </html>
